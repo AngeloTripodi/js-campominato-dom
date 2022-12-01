@@ -10,7 +10,7 @@ function getSquare(elm, cls, prn, clicked, listOne, listTwo){
     newSquare.addEventListener('click', function(){
         newSquare.classList.toggle(clicked)
         console.log(parseInt(newSquare.innerText));
-        if (listOne == listTwo) {
+        if (listOne.includes(listTwo)) {
             console.log('hai perso')
         }
     });
