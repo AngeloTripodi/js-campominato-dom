@@ -3,13 +3,16 @@ const squareContainer = document.querySelector('.grid');
 const playButtonElement = document.getElementById('playButton')
 const bombList = [];
 
-function getSquare(elm, cls, prn, clicked){
+function getSquare(elm, cls, prn, clicked, listOne, listTwo){
     const newSquare = document.createElement(elm);
     newSquare.classList.add(cls);
     prn.appendChild(newSquare);
     newSquare.addEventListener('click', function(){
         newSquare.classList.toggle(clicked)
         console.log(parseInt(newSquare.innerText));
+        if (listOne == listTwo) {
+            console.log('hai perso')
+        }
     });
     return newSquare;
     
@@ -33,10 +36,7 @@ function getBomb (list, min, max){
     }
     return randomNumberBomb;
 }
-for( let i = 0; i < 16; i++){
-    bombList.push(getBomb(bombList, 1, 100))
-    console.log(getBomb(bombList, 1, 100))
-}
+
 
 
 console.log(playButtonElement)
@@ -47,11 +47,18 @@ playButtonElement.addEventListener('click', function(){
     // utilizzo innterHTML vuoto per resettare la griglia ad ogni click
     squareContainer.innerHTML= "";
 
+    for( let i = 0; i < 16; i++){
+        bombList.push(getBomb(bombList, 1, 100))
+        console.log(bombList)
+    }
+
     for (let i=1; i<=100; i++){
-        const createNewSquare = getSquare('div', 'square', squareContainer, 'clicked');
+        const createNewSquare = getSquare('div', 'square', squareContainer, 'clicked', createNewSquare[i], bombList[i]);
         createNewSquare.classList.add('d-flex');
         createNewSquare.innerHTML =`<span class="m-auto"> ${[i]} <span>`;
     }
+
+    
 });
 
 
