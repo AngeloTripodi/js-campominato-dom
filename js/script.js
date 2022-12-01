@@ -1,6 +1,7 @@
 const mainElement = document.querySelector('main');
 const squareContainer = document.querySelector('.grid');
 const playButtonElement = document.getElementById('playButton')
+const bombList = [];
 
 function getSquare(elm, cls, prn, clicked){
     const newSquare = document.createElement(elm);
@@ -13,6 +14,30 @@ function getSquare(elm, cls, prn, clicked){
     return newSquare;
     
 }
+
+function randomNumber(numMax, numMin){
+        const randomNumbers = Math.floor (Math.random () * (numMax - numMin + 1) + numMin);
+        return randomNumbers;
+    }
+
+function getBomb (list, min, max){
+    let bombExist = false;
+    let randomNumberBomb;
+
+    while (bombExist === false) {
+        randomNumberBomb = randomNumber(min,max);
+
+        if (!list.includes(randomNumberBomb)) {
+            bombExist = true;
+        }
+    }
+    return randomNumberBomb;
+}
+for( let i = 0; i < 16; i++){
+    bombList.push(getBomb(bombList, 1, 100))
+    console.log(getBomb(bombList, 1, 100))
+}
+
 
 console.log(playButtonElement)
 
@@ -28,6 +53,9 @@ playButtonElement.addEventListener('click', function(){
         createNewSquare.innerHTML =`<span class="m-auto"> ${[i]} <span>`;
     }
 });
+
+
+
 
 // ! Al posto di innerHTML vuoto per disabilitare il click e farlo utilizzare solo una volta 
 // }, {once:true} );
