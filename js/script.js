@@ -1,19 +1,14 @@
 const mainElement = document.querySelector('main');
 const squareContainer = document.querySelector('.grid');
-const playButtonElement = document.getElementById('playButton')
+const playButtonElement = document.getElementById('playButton');
+const scoreBoardElement = document.getElementById('scoreboard');
 const bombList = [];
+let score = 0;
 
-function getSquare(elm, cls, prn, clicked, listOne, listTwo){
+function getSquare(elm, cls, prn){
     const newSquare = document.createElement(elm);
     newSquare.classList.add(cls);
     prn.appendChild(newSquare);
-    newSquare.addEventListener('click', function(){
-        newSquare.classList.toggle(clicked)
-        console.log(parseInt(newSquare.innerText));
-        if (listOne.includes(listTwo)) {
-            console.log('hai perso')
-        }
-    });
     return newSquare;
     
 }
@@ -39,10 +34,11 @@ function getBomb (list, min, max){
 
 
 
+
 console.log(playButtonElement)
 
 playButtonElement.addEventListener('click', function(){
-
+    const bombList = [];
     mainElement.classList.toggle('d-none');
     // utilizzo innterHTML vuoto per resettare la griglia ad ogni click
     squareContainer.innerHTML= "";
@@ -53,12 +49,30 @@ playButtonElement.addEventListener('click', function(){
     }
 
     for (let i=1; i<=100; i++){
-        const createNewSquare = getSquare('div', 'square', squareContainer, 'clicked', createNewSquare[i], bombList[i]);
+        const createNewSquare = getSquare('div', 'square', squareContainer);
         createNewSquare.classList.add('d-flex');
-        createNewSquare.innerHTML =`<span class="m-auto"> ${[i]} <span>`;
-    }
+        // createNewSquare.innerHTML =`<span class="m-auto"> ${[i]} <span>`;
+       
 
-    
+        createNewSquare.addEventListener('click', function(){
+
+            createNewSquare.classList.add('clicked')
+            console.log(i)
+            console.log(bombList)
+
+            while(bombList.includes(i)) {
+                alert('BOMBA PRESA! HAI PERSO, AGGIORNA LA PAGINA PER FARE UNA NUOVA PARTITA!');
+            }
+                score++;
+                console.log(score);
+                scoreBoardElement.innerHTML=score;
+                console.log(i)
+                if(score === 84){
+                    scoreBoardElement.innerHTML="HAI VINTO!";
+                    alert('CONGRATULAZIONI, HAI VINTO!!!');
+                } 
+        }, {once:true});   
+    }  
 });
 
 
